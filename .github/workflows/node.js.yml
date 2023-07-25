@@ -29,3 +29,4 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - run: npm install rete rete-area-plugin rete-connection-plugin rete-render-utils rete-react-plugin react react-dom
