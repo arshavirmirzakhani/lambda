@@ -7,4 +7,5 @@ this program can be used for simulating and design process of algorithms or math
 
 # get in touch 
 you can also join lambda discrod server! https://discord.gg/gwx3dYvrDe
-if you seen any kind of bugs or errors in program , let us know in the [issues](https://github.com/arshavirmirzakhani/lambda/issues)
+
+also if you seen any kind of bugs or errors in program , let us know in the [issues](https://github.com/arshavirmirzakhani/lambda/issues)
