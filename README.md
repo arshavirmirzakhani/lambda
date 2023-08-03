@@ -6,6 +6,6 @@ this program can be used for simulating and design process of algorithms or math
 # this program is in development but it will be released soon!
 
 # get in touch 
-you can also join lambda discrod server! https://discord.gg/gwx3dYvrDe
+you can also join lambda discord server : https://discord.gg/cW6WdNpPKd
 
 also if you seen any kind of bugs or errors in program , let us know in the [issues](https://github.com/arshavirmirzakhani/lambda/issues)
