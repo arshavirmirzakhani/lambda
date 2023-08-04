@@ -8,4 +8,4 @@ this program can be used for simulating and design process of algorithms or math
 # get in touch 
 you can also join lambda discord server : https://discord.gg/cW6WdNpPKd
 
-also if you seen any kind of bugs or errors in program , let us know in the [issues](https://github.com/arshavirmirzakhani/lambda/issues)
+also if you seen any kind of bugs or errors in program , let me know in the [issues](https://github.com/arshavirmirzakhani/lambda/issues)
