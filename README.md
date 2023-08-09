@@ -3,7 +3,7 @@
 lambda is a node editor for creating and simulating algorithms visualy 
 this program can be used for simulating and design process of algorithms or math expressions
 
-# this program is in development but it will be released soon!
+# this program is in development but it test version is available!
 
 # get in touch 
 you can also join lambda discord server : https://discord.gg/cW6WdNpPKd
