@@ -9,7 +9,7 @@ this program can be used for simulating and design process of algorithms or math
 this is an example the following formula has been simulated
 
 $$
-AB = \sqrt{x^{2}+y^{2}+z^{2}}
+AB = |\sqrt{[x_{2}-x_{1}]^{2}+[y_{2}-y_{1}]^{2}}|
 $$
 
 ![lambda example](https://github.com/arshavirmirzakhani/lambda/assets/76659587/c7ecec9c-7112-4f61-9740-b085304f7431)
