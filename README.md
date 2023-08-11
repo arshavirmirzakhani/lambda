@@ -6,7 +6,7 @@ this program can be used for simulating and design process of algorithms or math
 # this program is in development !
 
 ## examples
-this is an example the following formula has been simulated
+this is an example ofthe following formula has been simulated
 
 $$
 AB = |\sqrt{[x_{2}-x_{1}]^{2}+[y_{2}-y_{1}]^{2}}|
