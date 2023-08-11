@@ -12,6 +12,8 @@ $$
 AB = \sqrt{x^{2}+y^{2}+z^{2}}
 $$
 
+![lambda example](https://github.com/arshavirmirzakhani/lambda/assets/76659587/c7ecec9c-7112-4f61-9740-b085304f7431)
+
 # get in touch 
 you can also join lambda discord server : https://discord.gg/cW6WdNpPKd
 
