@@ -5,6 +5,13 @@ this program can be used for simulating and design process of algorithms or math
 
 # this program is in development !
 
+## examples
+this is an example the following formula has been simulated
+
+$$
+AB = \sqrt{x^{2}+y^{2}+z^{2}}
+$$
+
 # get in touch 
 you can also join lambda discord server : https://discord.gg/cW6WdNpPKd
 
