@@ -3,8 +3,6 @@
 lambda is a node editor for creating and simulating algorithms visualy 
 this program can be used for simulating and design process of algorithms or math expressions
 
-# this program is in development !
-
 ## examples
 this is an example ofthe following formula has been simulated
 
