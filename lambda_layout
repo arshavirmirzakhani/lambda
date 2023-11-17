@@ -1,0 +1,12 @@
+[Window][Debug##Default]
+Pos=29,14
+Size=537,455
+Collapsed=0
+
+[Window][hello]
+Pos=134,97
+Size=421,300
+Collapsed=1
+
+[Docking][Data]
+
