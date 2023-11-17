@@ -1,1 +1,0 @@
-g++ main.cpp imgui/*.cpp -I imgui -I C:\MinGW\include\SDL2 -lmingw32 -lSDL2main -lSDL2 -lopengl32 -O -o lambda.exe
