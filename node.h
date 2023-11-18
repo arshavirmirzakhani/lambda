@@ -1,14 +1,13 @@
 #include <string>
 #include <vector>
+#include <iostream>
 #include <imgui.h>
 #include <imgui_node_editor.h>
 
 namespace editor = ax::NodeEditor;
 
 
-int NODE_ID = 1;
-int PIN_ID = 1;
-int LINK_ID = 1;
+int UNIQUE_ID = 1;
 
 // data structures
 
@@ -38,7 +37,7 @@ class Link {
 
         Data_types link_type;
 
-        Link(editor::PinId begin,editor::PinId end){link_id = LINK_ID++;begin_id = begin;end_id = end;}
+        Link(editor::PinId begin,editor::PinId end){link_id = UNIQUE_ID++;begin_id = begin;end_id = end;}
 };
 
 class Node {
@@ -62,7 +61,7 @@ class add_Node : public Node {
         editor::PinId IN_pin_2;
         editor::PinId OUT_pin;       
 
-        add_Node(){node_id = NODE_ID++;IN_pin_1 = PIN_ID++;IN_pin_2 = PIN_ID++;OUT_pin = PIN_ID++;}
+        add_Node(){node_id = UNIQUE_ID++;IN_pin_1 = UNIQUE_ID++;IN_pin_2 = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;}
 
         void draw(){
             editor::BeginNode(node_id);
@@ -89,7 +88,7 @@ class lable_Node : public Node {
     public:
         int IN_pin;
 
-        lable_Node(){node_id = NODE_ID++;IN_pin = PIN_ID++;}
+        lable_Node(){node_id = UNIQUE_ID++;IN_pin = UNIQUE_ID++;}
 
         void draw(){
             editor::BeginNode(node_id);

@@ -13,8 +13,6 @@ const int SCREEN_HEIGHT = 480;
 
 int main( int argc, char* args[] ) {
 
-    nodes.push_back(new add_Node());
-    nodes.push_back(new lable_Node());
 
     editor::Config editor_config;
     editor_config.SettingsFile = "editor_config.json";
@@ -29,18 +27,18 @@ int main( int argc, char* args[] ) {
 
     else {
         //Create window
-        window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL );
+        window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
         
         SDL_GLContext glcontext = SDL_GL_CreateContext(window);
         SDL_GL_MakeCurrent(window, glcontext);
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
-        ImGuiStyle style = ImGui::GetStyle();
         ImGuiIO& io = ImGui::GetIO();
         (void)io;
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.IniFilename = "lambda_layout";
 
+        setup_theme();
 
         ImGui_ImplSDL2_InitForOpenGL(window,glcontext);
         ImGui_ImplOpenGL3_Init("#version 130");
@@ -51,6 +49,7 @@ int main( int argc, char* args[] ) {
 
         SDL_Event event; 
         bool quit = false;
+
         while( quit == false ){
 
             while( SDL_PollEvent( &event ) ){
@@ -58,16 +57,25 @@ int main( int argc, char* args[] ) {
                 if ( event.type == SDL_QUIT ) {
                     quit = true;
                 }                
-            }
-                
+            }                
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplSDL2_NewFrame(window);
             ImGui::NewFrame();
 
+            ImGui::Begin("workspace",nullptr,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
+            ImGui::SetWindowSize(ImGui::GetWindowSize());
+            ImGuiID dockspace_id = ImGui::GetID("workspace");
+            ImGui::DockSpace(dockspace_id);
+
+            ImGui::Begin("editor");
+
             editor::SetCurrentEditor(editor_context);
             run_editor();
             editor::SetCurrentEditor(nullptr);
+
+            ImGui::End();
+            ImGui::End();
 
             glViewport(0,0,(int)io.DisplaySize.x,(int)io.DisplaySize.y);
             glClearColor(0.2f,0.2f,0.2f,1.0f);
