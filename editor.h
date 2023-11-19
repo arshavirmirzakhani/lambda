@@ -109,8 +109,9 @@ void run_editor(){
 
             if (startPinId && endPinId){
 
-                editor::AcceptNewItem(); 
-                links.push_back(new Link(startPinId,endPinId));
+                if (editor::AcceptNewItem()){
+                	links.push_back(new Link(startPinId,endPinId));
+				}
 
                 editor::Link(UNIQUE_ID,startPinId,endPinId);
 
@@ -155,16 +156,20 @@ void run_editor(){
 
     editor::End();
 
-    if (ImGui::BeginPopupModal("create_node")) {
+
+    ImGui::Begin("toolbar");
+
+    if (ImGui::BeginPopup("create_node")) {
 
         if(ImGui::Button("Add")){
             nodes.push_back(new add_Node());
         }
+        if(ImGui::Button("Label")){
+            nodes.push_back(new lable_Node());
+        }
 
         ImGui::EndPopup();
     }
-
-    ImGui::Begin("toolbar");
 
     if (ImGui::Button("Create node")) {
         ImGui::OpenPopup("create_node");

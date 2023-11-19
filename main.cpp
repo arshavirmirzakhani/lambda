@@ -63,8 +63,9 @@ int main( int argc, char* args[] ) {
             ImGui_ImplSDL2_NewFrame(window);
             ImGui::NewFrame();
 
-            ImGui::Begin("workspace",nullptr,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
-            ImGui::SetWindowSize(ImGui::GetWindowSize());
+            ImGui::SetNextWindowPos(ImVec2(0,0));
+            ImGui::SetNextWindowSize(io.DisplaySize);
+            ImGui::Begin("workspace",nullptr,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
             ImGuiID dockspace_id = ImGui::GetID("workspace");
             ImGui::DockSpace(dockspace_id);
 
@@ -78,7 +79,7 @@ int main( int argc, char* args[] ) {
             ImGui::End();
 
             glViewport(0,0,(int)io.DisplaySize.x,(int)io.DisplaySize.y);
-            glClearColor(0.2f,0.2f,0.2f,1.0f);
+            glClearColor(0.2000000029802322f, 0.2196078449487686f, 0.2666666805744171f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             ImGui::Render();       
