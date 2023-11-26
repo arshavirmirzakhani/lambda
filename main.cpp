@@ -27,7 +27,7 @@ int main( int argc, char* args[] ) {
 
     else {
         //Create window
-        window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
+        window = SDL_CreateWindow( "lambda", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
         
         SDL_GLContext glcontext = SDL_GL_CreateContext(window);
         SDL_GL_MakeCurrent(window, glcontext);
