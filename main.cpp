@@ -56,7 +56,7 @@ int main( int argc, char* args[] ) {
                 ImGui_ImplSDL2_ProcessEvent(&event);
                 if ( event.type == SDL_QUIT ) {
                     quit = true;
-                }                
+                }              
             }                
 
             ImGui_ImplOpenGL3_NewFrame();

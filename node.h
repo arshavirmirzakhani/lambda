@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <map>
 #include <iostream>
 #include <imgui.h>
 #include <imgui_node_editor.h>
@@ -13,22 +14,24 @@ int UNIQUE_ID = 1;
 
 enum Node_types {
     ADD,
-    LABEL
+    LABEL,
 };
 
 enum Data_types {
-    INT_v,
-    FLOAT_v,
+    NUM_v,
     STRING_v,
     BOOL_v,
-    EXECUTE_V
+    EXECUTE_V,
 };
 
+enum Pin_type {
+    Input,
+    Output,
+};
 
 class Value {
     public:
-        int int_val = 0;
-        float float_val = 0;
+        float num_val = 0;
         std::string str_val = "";
         bool bool_val = false;
 
@@ -60,6 +63,7 @@ class Node {
 
 std::vector<Link*>links;
 std::vector<Node*>nodes;
+std::map<int,Pin_type>pins;
 
 bool is_pin_available(editor::PinId pin){
     for (auto link : links){
@@ -89,13 +93,72 @@ void set_link_value(editor::PinId pin,Value value){
 
 // nodes definition
 
+class constant_Node : public Node {
+    public:
+        editor::PinId OUT_pin;
+
+        constant_Node(){node_id = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[OUT_pin.Get()] = Pin_type::Output;}
+
+        void draw(){
+            editor::BeginNode(node_id);
+            ImGui::Text("Constant");
+
+            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+
+            ImGui::PushID(std::to_string(OUT_pin.Get()).c_str());
+            ImGui::SetNextItemWidth(100);
+            ImGui::InputFloat("value",&node_value.num_val);
+            ImGui::PopID();
+
+            editor::EndPin();
+
+            editor::EndNode();
+        }
+
+        void run(){
+            if (is_pin_available(OUT_pin)){
+                set_link_value(OUT_pin,node_value);
+            }
+        }
+};
+
+
+class lable_Node : public Node {
+    public:
+        editor::PinId IN_pin;
+
+        lable_Node(){node_id = UNIQUE_ID++;IN_pin = UNIQUE_ID++;pins[IN_pin.Get()] = Pin_type::Input;}
+
+        void draw(){
+            editor::BeginNode(node_id);
+            ImGui::Text("label");
+
+            editor::BeginPin(IN_pin,editor::PinKind::Input);
+
+            if (is_pin_available(IN_pin)){
+                node_value = get_link_value(IN_pin);
+                ImGui::Text(std::to_string(node_value.num_val).c_str());
+            }
+
+            editor::EndPin();
+
+
+            editor::EndNode();
+        }
+
+};
+
 class add_Node : public Node {
     public:
         editor::PinId IN_pin_1;
         editor::PinId IN_pin_2;
-        editor::PinId OUT_pin;       
+        editor::PinId OUT_pin;   
 
-        add_Node(){node_id = UNIQUE_ID++;IN_pin_1 = UNIQUE_ID++;IN_pin_2 = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;}
+        Value value_1;
+        Value value_2;
+            
+
+        add_Node(){node_id = UNIQUE_ID++;IN_pin_1 = UNIQUE_ID++;IN_pin_2 = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[IN_pin_1.Get()] = Pin_type::Input;pins[IN_pin_2.Get()] = Pin_type::Input;pins[OUT_pin.Get()] = Pin_type::Output;}
 
         void draw(){
 
@@ -130,62 +193,89 @@ class add_Node : public Node {
 
         void run(){
 
-        }
+            if (is_pin_available(IN_pin_1)){
+                value_1.num_val = get_link_value(IN_pin_1).num_val;
+            }
+            else { value_1.num_val = 0; }
 
-};
+            if (is_pin_available(IN_pin_2)){
+                value_2.num_val = get_link_value(IN_pin_2).num_val;
+            }
+            else { value_2.num_val = 0; }
 
-class lable_Node : public Node {
-    public:
-        editor::PinId IN_pin;
+            node_value.num_val = value_1.num_val + value_2.num_val;
 
-        lable_Node(){node_id = UNIQUE_ID++;IN_pin = UNIQUE_ID++;}
-
-        void draw(){
-            editor::BeginNode(node_id);
-            ImGui::Text("label");
-
-            editor::BeginPin(IN_pin,editor::PinKind::Input);
-
-            if (is_pin_available(IN_pin)){
-                node_value = get_link_value(IN_pin);
-                ImGui::Text(std::to_string(node_value.float_val).c_str());
+            if (is_pin_available(OUT_pin)){
+                set_link_value(OUT_pin,node_value);
             }
 
-            editor::EndPin();
-
-
-            editor::EndNode();
         }
 
 };
 
-class constant_Node : public Node {
+class sub_Node : public Node {
     public:
-        editor::PinId OUT_pin;
+        editor::PinId IN_pin_1;
+        editor::PinId IN_pin_2;
+        editor::PinId OUT_pin;   
 
-        constant_Node(){node_id = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;}
+        Value value_1;
+        Value value_2;
+            
+
+        sub_Node(){node_id = UNIQUE_ID++;IN_pin_1 = UNIQUE_ID++;IN_pin_2 = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[IN_pin_1.Get()] = Pin_type::Input;pins[IN_pin_2.Get()] = Pin_type::Input;pins[OUT_pin.Get()] = Pin_type::Output;}
 
         void draw(){
+
+
             editor::BeginNode(node_id);
-            ImGui::Text("Constant");
+            ImGui::Text("Sub");
 
-            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+            ImGui::BeginGroup();
+            editor::BeginPin(IN_pin_1,editor::PinKind::Input);
 
-            ImGui::PushID(std::to_string(OUT_pin.Get()).c_str());
-            ImGui::SetNextItemWidth(100);
-            ImGui::InputFloat("value",&node_value.float_val);
-            ImGui::PopID();
+            ImGui::Text("A");
 
             editor::EndPin();
+
+            editor::BeginPin(IN_pin_2,editor::PinKind::Input);
+
+            ImGui::Text("B");
+
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            ImGui::SameLine();
+
+            ImGui::BeginGroup();
+            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+            ImGui::Text("Result");
+            editor::EndPin();
+            ImGui::EndGroup();
 
             editor::EndNode();
         }
 
         void run(){
+
+            if (is_pin_available(IN_pin_1)){
+                value_1.num_val = get_link_value(IN_pin_1).num_val;
+            }
+            else { value_1.num_val = 0; }
+
+            if (is_pin_available(IN_pin_2)){
+                value_2.num_val = get_link_value(IN_pin_2).num_val;
+            }
+            else { value_2.num_val = 0; }
+
+            node_value.num_val = value_1.num_val - value_2.num_val;
+
             if (is_pin_available(OUT_pin)){
                 set_link_value(OUT_pin,node_value);
             }
+
         }
+
 };
 
 void proccess_nodes(){

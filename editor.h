@@ -94,6 +94,7 @@ void setup_theme()
 }
 
 
+
 void run_editor(){
 
     editor::Begin("Editor", ImVec2(0.0, 0.0f));
@@ -109,7 +110,13 @@ void run_editor(){
             if (startPinId && endPinId){
 
                 if (editor::AcceptNewItem()){
-                	links.push_back(new Link(startPinId,endPinId));
+					if (pins[startPinId.Get()] != pins[endPinId.Get()]){
+
+						if ((pins[startPinId.Get()] == Pin_type::Input && !is_pin_available(startPinId)) || (pins[endPinId.Get()] == Pin_type::Input && !is_pin_available(endPinId))){
+							links.push_back(new Link(startPinId,endPinId));
+						}
+
+					}
 				}
 
                 editor::Link(UNIQUE_ID,startPinId,endPinId);
@@ -128,7 +135,7 @@ void run_editor(){
 
         editor::LinkId deleted_link_id;
 
-        if (editor::QueryDeletedLink(&deleted_link_id)){
+        while (editor::QueryDeletedLink(&deleted_link_id)){
 
             if (editor::AcceptDeletedItem()){
 
@@ -137,7 +144,9 @@ void run_editor(){
                 for (auto link = links.begin();link != links.end(); link++) {
 
                     if ((*link)->link_id == deleted_link_id) {
+						delete links[index];
                         links.erase(link);
+						break;
                     }
 
                     index++;
@@ -145,6 +154,26 @@ void run_editor(){
             }
         }
 
+		editor::NodeId deleted_node_id;
+
+        while (editor::QueryDeletedNode(&deleted_node_id)){
+
+            if (editor::AcceptDeletedItem()){
+
+                int index = 0;
+
+                for (auto node = nodes.begin();node != nodes.end(); node++) {
+
+                    if ((*node)->node_id == deleted_node_id) {
+						delete nodes[index];
+                        nodes.erase(node);
+						break;
+                    }
+
+                    index++;
+                }
+            }
+        }
 
     }
 
@@ -165,6 +194,9 @@ void run_editor(){
         }
         if(ImGui::Button("Add")){
             nodes.push_back(new add_Node());
+        }
+        if(ImGui::Button("Sub")){
+            nodes.push_back(new sub_Node());
         }
 
         ImGui::EndPopup();
