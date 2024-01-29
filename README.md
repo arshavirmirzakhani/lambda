@@ -1,6 +1,6 @@
-# IMPORTANT!!
-THIS SOFTWARE IS IN RECONSTRUCTION AND THE NEW VERSION WILL BE AVAILABLE SOON!
-but a demo is available, [check it out!](https://github.com/arshavirmirzakhani/lambda/releases/tag/1.0-beta)
+# notice
+the lambda new version is in development and will be available soon!
+but dont panic, a demo is available, [check it out!](https://github.com/arshavirmirzakhani/lambda/releases/tag/1.0-beta)
 
 # lambda
 
