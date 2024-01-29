@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <math.h>
 #include <imgui.h>
 #include <imgui_node_editor.h>
 
@@ -121,7 +122,6 @@ class constant_Node : public Node {
             }
         }
 };
-
 
 class lable_Node : public Node {
     public:
@@ -269,6 +269,340 @@ class sub_Node : public Node {
             else { value_2.num_val = 0; }
 
             node_value.num_val = value_1.num_val - value_2.num_val;
+
+            if (is_pin_available(OUT_pin)){
+                set_link_value(OUT_pin,node_value);
+            }
+
+        }
+
+};
+
+class mul_Node : public Node {
+    public:
+        editor::PinId IN_pin_1;
+        editor::PinId IN_pin_2;
+        editor::PinId OUT_pin;   
+
+        Value value_1;
+        Value value_2;
+            
+
+        mul_Node(){node_id = UNIQUE_ID++;IN_pin_1 = UNIQUE_ID++;IN_pin_2 = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[IN_pin_1.Get()] = Pin_type::Input;pins[IN_pin_2.Get()] = Pin_type::Input;pins[OUT_pin.Get()] = Pin_type::Output;}
+
+        void draw(){
+
+
+            editor::BeginNode(node_id);
+            ImGui::Text("Mul");
+
+            ImGui::BeginGroup();
+            editor::BeginPin(IN_pin_1,editor::PinKind::Input);
+
+            ImGui::Text("A");
+
+            editor::EndPin();
+
+            editor::BeginPin(IN_pin_2,editor::PinKind::Input);
+
+            ImGui::Text("B");
+
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            ImGui::SameLine();
+
+            ImGui::BeginGroup();
+            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+            ImGui::Text("Result");
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            editor::EndNode();
+        }
+
+        void run(){
+
+            if (is_pin_available(IN_pin_1)){
+                value_1.num_val = get_link_value(IN_pin_1).num_val;
+            }
+            else { value_1.num_val = 0; }
+
+            if (is_pin_available(IN_pin_2)){
+                value_2.num_val = get_link_value(IN_pin_2).num_val;
+            }
+            else { value_2.num_val = 0; }
+
+            node_value.num_val = value_1.num_val * value_2.num_val;
+
+            if (is_pin_available(OUT_pin)){
+                set_link_value(OUT_pin,node_value);
+            }
+
+        }
+
+};
+
+class div_Node : public Node {
+    public:
+        editor::PinId IN_pin_1;
+        editor::PinId IN_pin_2;
+        editor::PinId OUT_pin;   
+
+        Value value_1;
+        Value value_2;
+            
+
+        div_Node(){node_id = UNIQUE_ID++;IN_pin_1 = UNIQUE_ID++;IN_pin_2 = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[IN_pin_1.Get()] = Pin_type::Input;pins[IN_pin_2.Get()] = Pin_type::Input;pins[OUT_pin.Get()] = Pin_type::Output;}
+
+        void draw(){
+
+
+            editor::BeginNode(node_id);
+            ImGui::Text("Div");
+
+            ImGui::BeginGroup();
+            editor::BeginPin(IN_pin_1,editor::PinKind::Input);
+
+            ImGui::Text("A");
+
+            editor::EndPin();
+
+            editor::BeginPin(IN_pin_2,editor::PinKind::Input);
+
+            ImGui::Text("B");
+
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            ImGui::SameLine();
+
+            ImGui::BeginGroup();
+            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+            ImGui::Text("Result");
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            editor::EndNode();
+        }
+
+        void run(){
+
+            if (is_pin_available(IN_pin_1)){
+                value_1.num_val = get_link_value(IN_pin_1).num_val;
+            }
+            else { value_1.num_val = 0; }
+
+            if (is_pin_available(IN_pin_2)){
+                value_2.num_val = get_link_value(IN_pin_2).num_val;
+            }
+            else { value_2.num_val = 0; }
+
+            node_value.num_val = value_1.num_val / value_2.num_val;
+
+            if (is_pin_available(OUT_pin)){
+                set_link_value(OUT_pin,node_value);
+            }
+
+        }
+
+};
+
+class pow_Node : public Node {
+    public:
+        editor::PinId IN_pin_1;
+        editor::PinId IN_pin_2;
+        editor::PinId OUT_pin;   
+
+        Value value_1;
+        Value value_2;
+            
+
+        pow_Node(){node_id = UNIQUE_ID++;IN_pin_1 = UNIQUE_ID++;IN_pin_2 = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[IN_pin_1.Get()] = Pin_type::Input;pins[IN_pin_2.Get()] = Pin_type::Input;pins[OUT_pin.Get()] = Pin_type::Output;}
+
+        void draw(){
+
+
+            editor::BeginNode(node_id);
+            ImGui::Text("Pow");
+
+            ImGui::BeginGroup();
+            editor::BeginPin(IN_pin_1,editor::PinKind::Input);
+
+            ImGui::Text("A");
+
+            editor::EndPin();
+
+            editor::BeginPin(IN_pin_2,editor::PinKind::Input);
+
+            ImGui::Text("B");
+
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            ImGui::SameLine();
+
+            ImGui::BeginGroup();
+            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+            ImGui::Text("Result");
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            editor::EndNode();
+        }
+
+        void run(){
+
+            if (is_pin_available(IN_pin_1)){
+                value_1.num_val = get_link_value(IN_pin_1).num_val;
+            }
+            else { value_1.num_val = 0; }
+
+            if (is_pin_available(IN_pin_2)){
+                value_2.num_val = get_link_value(IN_pin_2).num_val;
+            }
+            else { value_2.num_val = 0; }
+
+            node_value.num_val = pow(value_1.num_val,value_2.num_val);
+
+            if (is_pin_available(OUT_pin)){
+                set_link_value(OUT_pin,node_value);
+            }
+
+        }
+
+};
+
+class abs_Node : public Node {
+    public:
+        editor::PinId IN_pin;
+        editor::PinId OUT_pin;   
+
+        Value value;
+            
+
+        abs_Node(){node_id = UNIQUE_ID++;IN_pin = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[IN_pin.Get()] = Pin_type::Input;pins[OUT_pin.Get()] = Pin_type::Output;}
+
+        void draw(){
+
+
+            editor::BeginNode(node_id);
+            ImGui::Text("Abs");
+
+            ImGui::BeginGroup();
+            editor::BeginPin(IN_pin,editor::PinKind::Input);
+
+            ImGui::Text("Number");
+
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            ImGui::SameLine();
+
+            ImGui::BeginGroup();
+            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+            ImGui::Text("Result");
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            editor::EndNode();
+        }
+
+        void run(){
+
+            if (is_pin_available(IN_pin)){
+                value.num_val = get_link_value(IN_pin).num_val;
+            }
+            else { value.num_val = 0; }
+
+            node_value.num_val = abs(value.num_val);
+
+            if (is_pin_available(OUT_pin)){
+                set_link_value(OUT_pin,node_value);
+            }
+
+        }
+
+};
+
+class sqrt_Node : public Node {
+    public:
+        editor::PinId IN_pin;
+        editor::PinId OUT_pin;   
+
+        Value value;
+            
+
+        sqrt_Node(){node_id = UNIQUE_ID++;IN_pin = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[IN_pin.Get()] = Pin_type::Input;pins[OUT_pin.Get()] = Pin_type::Output;}
+
+        void draw(){
+
+
+            editor::BeginNode(node_id);
+            ImGui::Text("Sqrt");
+
+            ImGui::BeginGroup();
+            editor::BeginPin(IN_pin,editor::PinKind::Input);
+
+            ImGui::Text("Number");
+
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            ImGui::SameLine();
+
+            ImGui::BeginGroup();
+            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+            ImGui::Text("Result");
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            editor::EndNode();
+        }
+
+        void run(){
+
+            if (is_pin_available(IN_pin)){
+                value.num_val = get_link_value(IN_pin).num_val;
+            }
+            else { value.num_val = 0; }
+
+            node_value.num_val = sqrt(value.num_val);
+
+            if (is_pin_available(OUT_pin)){
+                set_link_value(OUT_pin,node_value);
+            }
+
+        }
+
+};
+
+class pi_Node : public Node {
+    public:
+        editor::PinId OUT_pin;   
+
+        Value value;
+            
+
+        pi_Node(){node_id = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[OUT_pin.Get()] = Pin_type::Output;}
+
+        void draw(){
+
+            editor::BeginNode(node_id);
+            ImGui::Text("Pi");
+
+            ImGui::BeginGroup();
+            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+            ImGui::Text("Number");
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            editor::EndNode();
+        }
+
+        void run(){
+
+            node_value.num_val = M_PI;
 
             if (is_pin_available(OUT_pin)){
                 set_link_value(OUT_pin,node_value);

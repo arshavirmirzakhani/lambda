@@ -37,6 +37,7 @@ int main( int argc, char* args[] ) {
         (void)io;
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.IniFilename = "lambda_layout";
+        io.Fonts->AddFontFromFileTTF("Lato-Regular.ttf" ,18.0f);
 
         setup_theme();
 

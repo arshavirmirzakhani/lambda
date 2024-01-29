@@ -198,6 +198,24 @@ void run_editor(){
         if(ImGui::Button("Sub")){
             nodes.push_back(new sub_Node());
         }
+        if(ImGui::Button("Mul")){
+            nodes.push_back(new mul_Node());
+        }
+        if(ImGui::Button("Div")){
+            nodes.push_back(new div_Node());
+        }
+        if(ImGui::Button("Pow")){
+            nodes.push_back(new pow_Node());
+        }
+        if(ImGui::Button("Abs")){
+            nodes.push_back(new abs_Node());
+        }
+        if(ImGui::Button("Sqrt")){
+            nodes.push_back(new sqrt_Node());
+        }
+        if(ImGui::Button("Pi")){
+            nodes.push_back(new pi_Node());
+        }
 
         ImGui::EndPopup();
     }
