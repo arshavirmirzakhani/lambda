@@ -93,7 +93,9 @@ void setup_theme()
 	style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.800000011920929f, 0.800000011920929f, 0.800000011920929f, 0.3499999940395355f);
 }
 
-
+void init_editor(){
+	nodes.push_back(new start_Node());
+}
 
 void run_editor(){
 
@@ -164,7 +166,7 @@ void run_editor(){
 
                 for (auto node = nodes.begin();node != nodes.end(); node++) {
 
-                    if ((*node)->node_id == deleted_node_id) {
+                    if ((*node)->node_id == deleted_node_id and (*node)->deletable == true) {
 						delete nodes[index];
                         nodes.erase(node);
 						break;

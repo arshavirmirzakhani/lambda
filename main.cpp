@@ -51,6 +51,8 @@ int main( int argc, char* args[] ) {
         SDL_Event event; 
         bool quit = false;
 
+        init_editor();
+
         while( quit == false ){
 
             while( SDL_PollEvent( &event ) ){

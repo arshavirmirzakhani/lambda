@@ -8,8 +8,8 @@
 
 namespace editor = ax::NodeEditor;
 
-
 int UNIQUE_ID = 1;
+bool START = false;
 
 // data structures
 
@@ -36,7 +36,8 @@ class Value {
         std::string str_val = "";
         bool bool_val = false;
 
-        bool execute = false;
+        bool start = false;
+
 };
 
 class Link {
@@ -56,7 +57,10 @@ class Node {
     public:
         Value node_value;
         editor::NodeId node_id;
+        bool deletable = true;
+
         Node(){}
+
         virtual void draw(){}
         virtual void run(){}
 
@@ -579,10 +583,7 @@ class sqrt_Node : public Node {
 
 class pi_Node : public Node {
     public:
-        editor::PinId OUT_pin;   
-
-        Value value;
-            
+        editor::PinId OUT_pin;           
 
         pi_Node(){node_id = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[OUT_pin.Get()] = Pin_type::Output;}
 
@@ -611,6 +612,43 @@ class pi_Node : public Node {
         }
 
 };
+
+
+class start_Node : public Node {
+    public:
+        editor::PinId OUT_pin;   
+
+        Value value;
+
+        start_Node(){node_id = UNIQUE_ID++;OUT_pin = UNIQUE_ID++;pins[OUT_pin.Get()] = Pin_type::Output;deletable = false;}
+
+        void draw(){
+
+            editor::BeginNode(node_id);
+            ImGui::Text("Start");
+
+            ImGui::BeginGroup();
+            editor::BeginPin(OUT_pin,editor::PinKind::Output);
+            ImGui::Text("on start");
+            editor::EndPin();
+            ImGui::EndGroup();
+
+            editor::EndNode();
+        }
+
+        void run(){
+
+            node_value.start = START;
+
+            if (is_pin_available(OUT_pin)){
+                set_link_value(OUT_pin,node_value);
+            }
+
+        }
+
+};
+
+
 
 void proccess_nodes(){
     for (auto node : nodes){
