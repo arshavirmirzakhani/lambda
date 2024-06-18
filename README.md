@@ -1,6 +1,5 @@
 # notice
-the lambda new version is in development and will be available soon!
-but dont panic, a demo is available, [check it out!](https://github.com/arshavirmirzakhani/lambda/releases/tag/1.0-beta)
+**this project is discontinued,use [lambda2](https://github.com/arshavirmirzakhani/lambda2) instead**
 
 # lambda
 
