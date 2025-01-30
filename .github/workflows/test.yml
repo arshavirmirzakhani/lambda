@@ -1,0 +1,41 @@
+name: test build
+
+on: 
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup Python
+        uses: actions/setup-python@v5.1.0
+      - name: install pyinstaller
+        run: pip install pyinstaller
+      - name: install requirements
+        run: pip install -r requirements.txt
+      - name: build
+        run: pyinstaller --onefile --windowed --optimize=2 --icon=logo.ico main.py -n Lambda-${{ runner.os }}
+      - name: upload windows artifact
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}
+          path: dist/Lambda-${{ runner.os }}.exe
+
+      - name: upload ubuntu and macos artifact
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}
+          path: dist/Lambda-${{ runner.os }}
+            
+          
+       
