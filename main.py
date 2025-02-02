@@ -12,6 +12,8 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('Lambda')
 
         self.node_graph = Graph()
+        
+        self.node_graph.register_node(StartNode)
         self.node_graph.register_node(ConstantNode)
         self.node_graph.register_node(LabelNode)
         self.node_graph.register_node(AddNode)
@@ -19,6 +21,7 @@ class MainWindow(QMainWindow):
         graph_context_menu = self.node_graph.get_context_menu('graph')
         graph_nodes_menu = graph_context_menu.add_menu('Create Node')
 
+        graph_nodes_menu.add_command('Start',lambda : self.node_graph.create_node('Nodes.StartNode'))
         graph_nodes_menu.add_command('Constant',lambda : self.node_graph.create_node('Nodes.ConstantNode'))
         graph_nodes_menu.add_command('Label',lambda : self.node_graph.create_node('Nodes.LabelNode'))
         graph_nodes_menu.add_command('Add',lambda : self.node_graph.create_node('Nodes.AddNode'))
@@ -42,6 +45,8 @@ class MainWindow(QMainWindow):
         file_menu.addAction(file_save_action)
         file_menu.addAction(file_load_action)
 
+        run_menu = menu_bar.addMenu('&Run')
+        run_action = QAction(QIcon(),"&Run simulation",self)
 
         self.setCentralWidget(self.node_graph.widget)
 
@@ -66,6 +71,9 @@ class MainWindow(QMainWindow):
         if dialog.exec():
             self.node_graph.load_session(dialog.selectedFiles()[0])
 
+
+    def run(self):
+        self.node_graph
 
 
 if __name__ == '__main__':
