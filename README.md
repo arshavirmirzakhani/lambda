@@ -2,7 +2,7 @@
 > this project is at development state
 
 <p align="center">
-  <img src="icon.png"/>  
+  <img src="logo.png"/>  
 </p>
 
 
